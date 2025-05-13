@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Country Profiler</title>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="libs/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="libs/leaflet.extramarkers/leaflet.extra-markers.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="libs/Leaflet.EasyButton-2.0.0/src/easy-button.css"
+    />
+    <link
+      rel="stylesheet"
+      href="css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav>
+      <h4>Country Profiler</h4>
+      <select id="countrySelect"></select>
+    </nav>
+    <div id="map"></div>
+
+    <!-- Sidebar -->
+    <div id="infoSidebar" class="sidebar">
+      <button id="closeSidebar" class="closebtn">&times;</button>
+      <h2 id="countryName">Country Name</h2>
+      <p><strong>Capital:</strong> <span id="capital">N/A</span></p>
+      <p><strong>Population:</strong> <span id="population">N/A</span></p>
+      <p><strong>Currency:</strong> <span id="currency">N/A</span></p>
+      <p><strong>Weather:</strong> <span id="weather">N/A</span></p>
+      <p>
+        <strong>Wikipedia:</strong>
+        <a id="wikiLink" href="#" target="_blank">View Article</a>
+      </p>
+      <p>
+        <strong>Recent Earthquakes:</strong>
+        <span id="earthquakes">Loading...</span>
+      </p>
+    </div>
+
+    
+    <!-- Leaflet core -->
+    <script src="libs/leaflet/leaflet.js"></script>
+
+    <!-- Leaflet MarkerCluster -->
+    <script src="libs/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+
+    <!-- Leaflet Extra Markers -->
+    <script src="libs/leaflet.extramarkers/leaflet.extra-markers.min.js"></script>
+
+    <!-- Leaflet EasyButton -->
+    <script src="libs/Leaflet.EasyButton-2.0.0/src/easy-button.js"></script>
+
+    <script src="libs/jquery-3.7.1.min.js"></script>
+ 
+    <script src="js/app.js"></script>
+  </body>
+</html>
