@@ -6,7 +6,7 @@ A web-based interactive application that displays detailed country profiles, inc
 
 ## 🌍 Live Preview
 
-> **Note:** Host locally or deploy with platforms like **Netlify**, **GitHub Pages**, or **Vercel** for a live demo.
+> **Note:** Live Demo link https://pelumi.wuaze.com
 
 ---
 
