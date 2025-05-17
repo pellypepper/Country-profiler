@@ -1,68 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Country Profiler</title>
-    <link rel="stylesheet" href="css/index.css" />
-    <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
-    <link
-      rel="stylesheet"
-      href="libs/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css"
-    />
-    <link
-      rel="stylesheet"
-      href="libs/leaflet.extramarkers/leaflet.extra-markers.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="libs/Leaflet.EasyButton-2.0.0/src/easy-button.css"
-    />
-    <link
-      rel="stylesheet"
-      href="css/all.min.css"
-    />
-  </head>
-  <body>
-    <nav>
-      <h4>Country Profiler</h4>
-      <select id="countrySelect"></select>
-    </nav>
-    <div id="map"></div>
 
-    <!-- Sidebar -->
-    <div id="infoSidebar" class="sidebar">
-      <button id="closeSidebar" class="closebtn">&times;</button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Country Profiler</title>
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
+  <link rel="stylesheet" href="libs/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="libs/leaflet.extramarkers/leaflet.extra-markers.min.css" />
+  <link rel="stylesheet" href="libs/Leaflet.EasyButton-2.0.0/src/easy-button.css" />
+  <link rel="stylesheet" href="css/all.min.css" />
+</head>
+
+<body>
+  <nav>
+    <h4>Country Profiler</h4>
+    <select id="countrySelect"></select>
+  </nav>
+  <div id="map"></div>
+
+  <!-- Sidebar -->
+  <div id="infoSidebar" class="sidebar">
+    <button id="closeSidebar" class="closebtn">&times;</button>
+
+    <!-- Home / General Info Section -->
+    <div id="sidebar-home" class="sidebar-section">
       <h2 id="countryName">Country Name</h2>
       <p><strong>Capital:</strong> <span id="capital">N/A</span></p>
       <p><strong>Population:</strong> <span id="population">N/A</span></p>
       <p><strong>Currency:</strong> <span id="currency">N/A</span></p>
-      <p><strong>Weather:</strong> <span id="weather">N/A</span></p>
-      <p>
-        <strong>Wikipedia:</strong>
-        <a id="wikiLink" href="#" target="_blank">View Article</a>
-      </p>
-      <p>
-        <strong>Recent Earthquakes:</strong>
+      <p><strong>Languages:</strong> <span id="languages">N/A</span></p>
+      <p><strong>Flag:</strong> <span id="flag">N/A</span></p>
+      <p><strong>Coat of Arms:</strong> <span id="coatOfArms">N/A</span></p>
+    </div>
+
+    <!-- Wikipedia Section -->
+    <div id="sidebar-wikipedia" class="sidebar-section" style="display: none;">
+      <h3>Wikipedia</h3>
+      <p><a id="wikiLink" href="#" target="_blank">View Article</a></p>
+    </div>
+
+    <!-- Weather Section -->
+    <div id="sidebar-weather" class="sidebar-section" style="display: none;">
+      <h3>3-Day Forecast</h3>
+      <ul id="weatherForecast">
+        <li>Loading...</li>
+      </ul>
+    </div>
+
+    <!-- News Section -->
+    <div id="sidebar-news" class="sidebar-section" style="display: none;">
+      <h3>Latest News</h3>
+      <div id="news">Loading news...</div>
+    </div>
+
+    <!-- Earthquake Info -->
+    <div id="sidebar-earthquakes" class="sidebar-section">
+      <p><strong>Recent Earthquakes:</strong>
         <span id="earthquakes">Loading...</span>
       </p>
     </div>
 
-    
-    <!-- Leaflet core -->
-    <script src="libs/leaflet/leaflet.js"></script>
+    <!-- Currency Section -->
+    <div id="sidebar-currency" class="sidebar-section" style="display: none;">
+      <h3>Currency Converter</h3>
+      <p><strong>Currency:</strong> <span id="currencyName">Loading...</span></p>
+      <input type="number" id="amount" placeholder="Enter amount" />
+      <select id="targetCurrency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
+        <option value="INR">INR</option>
+        <!-- Add more as needed -->
+      </select>
+      <button id="convertCurrency">Convert</button>
+      <p><strong>Converted:</strong> <span id="convertedAmount">N/A</span></p>
+    </div>
 
-    <!-- Leaflet MarkerCluster -->
-    <script src="libs/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
+  </div>
 
-    <!-- Leaflet Extra Markers -->
-    <script src="libs/leaflet.extramarkers/leaflet.extra-markers.min.js"></script>
+  <!-- Leaflet core -->
+  <script src="libs/leaflet/leaflet.js"></script>
 
-    <!-- Leaflet EasyButton -->
-    <script src="libs/Leaflet.EasyButton-2.0.0/src/easy-button.js"></script>
+  <!-- Leaflet MarkerCluster -->
+  <script src="libs/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
 
-    <script src="libs/jquery-3.7.1.min.js"></script>
- 
-    <script src="js/app.js"></script>
-  </body>
+  <!-- Leaflet Extra Markers -->
+  <script src="libs/leaflet.extramarkers/leaflet.extra-markers.min.js"></script>
+
+  <!-- Leaflet EasyButton -->
+  <script src="libs/Leaflet.EasyButton-2.0.0/src/easy-button.js"></script>
+
+  <script src="libs/jquery-3.7.1.min.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+
 </html>

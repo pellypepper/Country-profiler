@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 if (isset($_GET['lat']) && isset($_GET['lng'])) {
     $lat = $_GET['lat'];
     $lng = $_GET['lng'];
-    $apiKey = ''; 
+    $apiKey = '4d6d04de29d54a319c8f2eeb5b1b18a5'; 
 
     $url = "https://api.opencagedata.com/geocode/v1/json?q=$lat+$lng&key=$apiKey";
     $response = @file_get_contents($url);
@@ -42,13 +42,23 @@ if (isset($_GET['code'])) {
         $name = $country['name']['common'];
         $capital = isset($country['capital'][0]) ? $country['capital'][0] : 'N/A';
         $currencyCode = !empty($country['currencies']) ? array_key_first($country['currencies']) : 'N/A';
+        
+        // Extract language information
+        $languages = 'N/A';
+        if (!empty($country['languages'])) {
+            $languages = implode(', ', $country['languages']);
+        }
+        
+        // Extract flag and coat of arms
+        $flag = isset($country['flags']['png']) ? $country['flags']['png'] : null;
+        $coatOfArms = isset($country['coatOfArms']['png']) ? $country['coatOfArms']['png'] : null;
 
 
         // 2. Weather (OpenWeather)
         $weather = [];
         $weatherDesc = 'N/A';
         if ($capital !== 'N/A') {
-            $openWeatherKey = ''; // 
+            $openWeatherKey = '5014e6b3bf193188d57264af05782338'; // 
             $weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$capital&appid=$openWeatherKey&units=metric";
             $weatherData = @file_get_contents($weatherUrl);
             
@@ -102,7 +112,7 @@ if (isset($_GET['code'])) {
         }
 
    
-        // 6. Earthquake (Significant, last 7 days)
+        // 6. Earthquake ( last 7 days)
         $quakes = [];
         $quakeData = @file_get_contents("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson");
         
@@ -130,7 +140,11 @@ if (isset($_GET['code'])) {
             'capital' => $capital,
             'population' => isset($country['population']) ? $country['population'] : 'N/A',
             'currency' => $currencyCode,
+            'currencyCode' => $currencyCode, 
             'exchangeRate' => $exchangeRate,
+            'languages' => $languages,
+            'flag' => $flag,
+            'coatOfArms' => $coatOfArms,
             'weather' => $weatherDesc,
             'wikipedia' => [
                 'summary' => $wikiExtract,

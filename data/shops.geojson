@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Oxford Street Mall",
+        "countryCode": "GB"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.1410, 51.5154]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Downtown Market LA",
+        "countryCode": "US"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-118.2437, 34.0522]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Les Halles Shopping Center",
+        "countryCode": "FR"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3469, 48.8610]
+      }
+    }
+  ]
+}
