@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 if (isset($_GET['lat']) && isset($_GET['lng'])) {
     $lat = $_GET['lat'];
     $lng = $_GET['lng'];
-    $apiKey = '4d6d04de29d54a319c8f2eeb5b1b18a5'; 
+    $apiKey = 'your api key'; 
 
     $url = "https://api.opencagedata.com/geocode/v1/json?q=$lat+$lng&key=$apiKey";
     $response = @file_get_contents($url);
@@ -58,7 +58,7 @@ if (isset($_GET['code'])) {
         $weather = [];
         $weatherDesc = 'N/A';
         if ($capital !== 'N/A') {
-            $openWeatherKey = '5014e6b3bf193188d57264af05782338'; // 
+            $openWeatherKey = 'your api key'; // 
             $weatherUrl = "https://api.openweathermap.org/data/2.5/weather?q=$capital&appid=$openWeatherKey&units=metric";
             $weatherData = @file_get_contents($weatherUrl);
             

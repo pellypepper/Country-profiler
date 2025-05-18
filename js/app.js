@@ -27,7 +27,7 @@ function initMap() {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
 
-  const weatherLayer = L.tileLayer('https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=5014e6b3bf193188d57264af05782338', {
+  const weatherLayer = L.tileLayer('https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=your api key', {
     attribution: 'Weather data © OpenWeatherMap',
     opacity: 0.5
   });
