@@ -61,16 +61,59 @@ Get OpenCage API key
 Get OpenWeatherMap API key
 
 🗺️ How It Works
-User selects a country or allows auto-detection by geolocation
+User selects a country from the dropdown or allows auto-detection by geolocation.
 
-App queries multiple APIs and updates the:
+The app queries multiple APIs and updates:
 
-Map (country borders)
+The map with country borders, airports, cities, and earthquake markers.
 
-Sidebar (details)
+The sidebar with detailed country info, currency converter, Wikipedia summaries, weather forecast, and news.
 
-Weather overlay
+The weather overlay on the map.
 
-Click anywhere on the map to reopen sidebar
+📱 User Interface and Controls
+Easy Buttons for Sidebar Sections
+At the top-right of the map, several easy buttons provide quick access to different sidebar sections and map functions:
 
+Button Icon	Function
+🌩️ fa-cloud	Toggle the weather overlay (cloud map).
+🌐 fa-globe	Reset the map view to default world view.
+📖 fa-wikipedia-w	Show the Wikipedia article sidebar section with country summaries.
+💵 fa-money-bill-wave	Show the Currency Converter sidebar.
+🌤️ fa-cloud-sun	Show the 3-day weather forecast sidebar.
+📰 fa-newspaper	Show the Latest news related to the selected country.
+🏠 fa-home	Show General Info sidebar with country basics and resets map view.
+
+Sidebar Sections
+Each easy button reveals a different sidebar section:
+
+General Info: Displays country name, capital, population, region, subregion, area, currency, languages, flag, coat of arms, and recent earthquakes.
+
+Wikipedia: Top Wikipedia search results for the country with links.
+
+Currency Converter: Convert between the country's currency and other supported currencies.
+
+Weather Forecast: Shows 3-day weather forecast for the country's capital.
+
+Latest News: Displays news headlines related to the country.
+
+The sidebar can be opened by clicking on the map markers or using the easy buttons and closed via the close button.
+
+Airports and Cities Markers with Layer Control
+Airports and Cities are displayed as clustered markers on the map using Leaflet MarkerCluster plugin.
+
+Airports use a blue plane icon, cities use a green city icon.
+
+Marker clusters improve performance and usability by grouping close markers.
+
+These marker layers are toggleable using the layer control panel at the top-right corner:
+
+Overlay Layer	Description
+Airports	Shows clustered airport locations within the selected country.
+Cities	Shows clustered major city locations within the selected country.
+Earthquakes	Shows recent significant earthquakes worldwide (magnitude > 4.5).
+
+Users can toggle these overlays on/off to customize the map view.
+
+The Earthquakes layer loads dynamically when enabled and clears when disabled.
 
