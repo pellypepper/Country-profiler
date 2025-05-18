@@ -6,7 +6,7 @@ A web-based interactive application that displays detailed country profiles, inc
 
 ## 🌍 Live Preview
 
-> **Note:** Live Demo link https://pelumi.wuaze.com
+> **Note:** Live Demo link github link: https://ppeliance.42web.io/
 
 ---
 
