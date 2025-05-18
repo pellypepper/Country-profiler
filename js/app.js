@@ -1,6 +1,3 @@
-
-
-
 let map, currentGeoJsonLayer = null, currentCurrency = null, currentExchangeRate = 1;
 let airportCluster, cityCluster, earthquakeLayer;
 let overlayLayers = {};
@@ -46,14 +43,7 @@ function initMap() {
     showSidebarSection('sidebar-home');
   }, 'General Info').addTo(map);
 
-  L.marker([20, 0], {
-    icon: L.ExtraMarkers.icon({
-      icon: 'fa-star',
-      markerColor: 'green-light',
-      shape: 'circle',
-      prefix: 'fa'
-    })
-  }).bindPopup('Custom Extra Marker').addTo(map);
+
 
   airportCluster = L.markerClusterGroup();
   cityCluster = L.markerClusterGroup();

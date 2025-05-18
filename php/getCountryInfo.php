@@ -112,7 +112,7 @@ if (isset($_GET['code'])) {
         }
 
    
-        // 6. Earthquake ( last 7 days)
+        // 6. Earthquake 
         $quakes = [];
         $quakeData = @file_get_contents("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson");
         
