@@ -2,75 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Country Profiler</title>
-  <link rel="stylesheet" href="css/index.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gazetteer</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <!-- Leaflet & Plugins -->
   <link rel="stylesheet" href="libs/leaflet/leaflet.css" />
   <link rel="stylesheet" href="libs/Leaflet.markercluster-1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="libs/Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css" />
   <link rel="stylesheet" href="libs/leaflet.extramarkers/leaflet.extra-markers.min.css" />
   <link rel="stylesheet" href="libs/Leaflet.EasyButton-2.0.0/src/easy-button.css" />
+  <link rel="stylesheet" href="css/index.css" />
+
   <link rel="stylesheet" href="css/all.min.css" />
 </head>
-<body>
-  <nav>
-    <h4>Country Profiler</h4>
-    <select id="countrySelect"></select>
-  </nav>
-  <div id="map"></div>
-
-  <!-- Modal (replaces Sidebar) -->
-  <div id="infoModal" class="modal">
-    <div class="modal-content">
-      <span class="close-modal" id="closeModal">&times;</span>
-      
-      <!-- <nav class="modal-nav">
-        <button data-section="modal-home" class="active">General Info</button>
-        <button data-section="modal-wikipedia">Wikipedia</button>
-        <button data-section="modal-weather">Weather</button>
-        <button data-section="modal-news">News</button>
-        <button data-section="modal-earthquakes">Earthquakes</button>
-        <button data-section="modal-currency">Currency</button>
-      </nav> -->
-     <div id="modal-home" class="modal-section">
-  <h2 id="countryName">Loading...</h2>
-  <p><strong>Capital:</strong> <span id="capital">Loading...</span></p>
-  <p><strong>Population:</strong> <span id="population">Loading...</span></p>
-  <p><strong>Currency:</strong> <span id="currency">Loading...</span></p>
-  <p><strong>Languages:</strong> <span id="languages">Loading...</span></p>
-  <p><strong>Flag:</strong> <span id="flag">Loading...</span></p>
-  <p><strong>Coat of Arms:</strong> <span id="coatOfArms">Loading...</span></p>
+<body class="">
+  <div id="preloader" style="position:fixed;inset:0;z-index:2000;background:#fff;display:flex;align-items:center;justify-content:center;">
+  <div class="spinner-border text-white" style="width:4rem;height:4rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
 </div>
-      <div id="modal-wikipedia" class="modal-section" style="display:none;">
-        <h3>Wikipedia</h3>
-        <div id="sidebar-wikipedia"></div>
-      </div>
-      <div id="modal-weather" class="modal-section" style="display:none;">
-        <h3>3-Day Forecast</h3>
-        <ul id="weatherForecast"><li>Loading...</li></ul>
-      </div>
-      <div id="modal-news" class="modal-section" style="display:none;">
-        <h3>Latest News</h3>
-        <div id="news">Loading news...</div>
-      </div>
-      <div id="modal-earthquakes" class="modal-section" style="display:none;">
-        <p><strong>Recent Earthquakes:</strong> <span id="earthquakes">Loading...</span></p>
-      </div>
-      <div id="modal-currency" class="modal-section" style="display:none;">
-        <h3>Currency Converter</h3>
-        <p><strong>Currency:</strong> <span id="currencyName">Loading...</span></p>
-        <input type="number" id="amount" placeholder="Enter amount" />
-        <select id="targetCurrency"></select>
+
+
+<!-- Navbar -->
+  <nav class="navbar fixed-top px-3 d-flex justify-content-center align-items-center" style="z-index: 1000;">
+    <select id="countrySelect" class="form-select shadow-sm form-select-sm w-auto" style="min-width:300px; max-width:600px; width:100%;">
+      <option selected disabled>Select a country</option>
+    </select>
+  </nav>
+
+
+<!-- Map -->
+<div id="map" class=" w-100 vh-100 border-bottom" ></div>
+
+
+
+ <!-- At a glance Modal -->
+  <div id="countryInfoModal" class="modal" data-bs-backdrop="false" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content shadow">
+        <div class="modal-header bg-dark bg-gradient text-white">
+          <h5 class="modal-title"><i class="fa-solid fa-circle-info fa-xl me-2"></i>At a glance</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>           
+        <div class="modal-body">
+          <div id="pre-load"></div>
+          <table class="table table-striped">
+            <tr>
+              <td class="text-center col-2"><i class="fa-solid fa-landmark-flag fa-xl text-success"></i></td>
+              <td class="text-nowrap">Capital city</td>
+              <td id="capitalCity" class="text-end"></td>
+            </tr>
   
-        <p><strong>Converted:</strong> <span id="convertedAmount">N/A</span></p>
+            <tr>
+              <td class="text-center"><i class="fa-solid fa-ear-listen fa-xl text-success"></i></td>
+              <td>Languages</td>
+              <td id="languages-glance" class="text-end"></td>
+            </tr>
+            <tr>
+              <td class="text-center"><i class="fa-solid fa-coins fa-xl text-success"></i></td>
+              <td>Currency</td>
+              <td id="currency-glance" class="text-end"></td>
+            </tr>
+            
+            
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark btn-sm" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Leaflet core -->
+<!-- Country Info Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content position-relative">
+     
+ 
+       
+      <div class="modal-body">
+        <!-- Modal Sections -->
+        <div id="modal-home" class=" modal-section">
+               <div class="modal-header position-absolute mb-3 top-0 start-0 end-0 bg-dark bg-gradient text-white">
+        <h5 class="modal-title">Country Info</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="closeModal"></button>
+      </div>
+          
+          <h2 id="countryName" class="h4 mt-5 fw-bold">Loading...</h2>
+              <table class="table table-striped">
+  <tr>
+    <td class="text-center col-2"><i class="fa-solid fa-landmark-flag fa-xl text-dark"></i></td>
+    <td class="text-nowrap">Capital city</td>
+    <td class="text-end" id="capital">Loading...</td>
+  </tr>
+  <tr>
+    <td class="text-center col-2"><i class="fa-solid fa-user-group fa-xl text-dark"></i></td>
+    <td class="text-nowrap">Population</td>
+    <td class="text-end" id="population">Loading...</td>
+  </tr>
+  <tr>
+    <td class="text-center col-2"><i class="fa-solid fa-coins fa-xl text-dark"></i></td>
+    <td class="text-nowrap">Currency</td>
+    <td class="text-end" id="currency">Loading...</td>
+  </tr>
+  <tr>
+    <td class="text-center col-2"><i class="fa-solid fa-language fa-xl text-dark"></i></td>
+    <td class="text-nowrap">Languages</td>
+    <td class="text-end" id="languages">Loading...</td>
+  </tr>
+  <tr>
+    <td class="text-center col-2"><i class="fa-solid fa-flag fa-xl text-dark"></i></td>
+    <td class="text-nowrap">Flag</td>
+    <td class="text-end" id="flag">Loading...</td>
+  </tr>
+  <tr>
+    <td class="text-center col-2"><i class="fa-solid fa-shield-halved fa-xl text-dark"></i></td>
+    <td class="text-nowrap">Coat of Arms</td>
+    <td class="text-end" id="coatOfArms">Loading...</td>
+  </tr>
+</table>
+        </div>
+        <div id="modal-wikipedia" class="modal-section d-none mt-4">
+                           <div class="modal-header position-absolute mb-3 top-0 start-0 end-0 bg-dark bg-gradient text-white">
+        <h5 class="modal-title">Wikipedia</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="closeModal"></button>
+      </div>
+          <h5>Wikipedia</h5>
+          <div id="sidebar-wikipedia" class="overflow-auto" style="max-height: 300px;"></div>
+        </div>
+        <div id="modal-weather" class="modal-section d-none mt-4">
+               <div class="modal-header position-absolute mb-3 top-0 start-0 end-0 bg-dark bg-gradient text-white">
+        <h5 class="modal-title ">Weather</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="closeModal"></button>
+      </div>
+        
+          <ul id="weatherForecast" class="list-group mt-5" style="list-style-type:none;padding-left:0;">
+            <li class="list-group-item">Loading...</li>
+          </ul>
+        </div>
+        <div id="modal-news" class="modal-sm modal-dialog-scrollable modal-section d-none mt-4">
+          <div class="modal-header position-absolute mb-3 top-0 start-0 end-0 bg-dark bg-gradient text-white">
+        <h5 class="modal-title">News</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="closeModal"></button>
+      </div>
+          <h5 class="mt-4">Latest News</h5>
+          <div id="news">Loading news...</div>
+        </div>
+
+    <div id="modal-currency" class="modal-section d-none mt-5 p-4 border rounded shadow-sm bg-light" >
+           <div class="modal-header position-absolute mb-5 top-0 start-0 end-0 bg-dark bg-gradient text-white">
+        <h5 class="modal-title mt-3">Currency Converter</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="closeModal"></button>
+      </div>
+  <h5 class="
+ text-center">Currency Converter</h5>
+
+  <div class="d-flex flex-column gap-3 mb-3">
+    <label for="baseCurrency" class="form-label">From 
+       <input 
+      type="number" 
+      id="amount" 
+      class="form-control" 
+      placeholder="Enter amount" 
+      min="0" 
+      step="any" 
+      aria-label="Amount to convert"
+          value="1"
+    /> </label>
+   
+
+  <label>
+    Convert to
+      <select id="targetCurrency" class="form-select" aria-label="Select target currency">
+
+    </select>
+  </label>
+  </div>
+
+  <p class="border rounded d-flex justify-content-between align-items-center px-3 py-2 bg-white">
+    <strong>Result:</strong> 
+    <span id="convertedAmount" class="fs-5 fw-bold"></span>
+  </p>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark btn-sm" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="libs/leaflet/leaflet.js"></script>
   <script src="libs/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js"></script>
   <script src="libs/leaflet.extramarkers/leaflet.extra-markers.min.js"></script>
   <script src="libs/Leaflet.EasyButton-2.0.0/src/easy-button.js"></script>
+  only show day, and mo
   <script src="libs/jquery-3.7.1.min.js"></script>
   <script src="js/app.js"></script>
 </body>

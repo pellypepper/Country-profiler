@@ -15,7 +15,7 @@ function get($url) {
 if (isset($_GET['lat']) && isset($_GET['lng'])) {
     $lat = $_GET['lat'];
     $lng = $_GET['lng'];
-    $apiKey = 'apiKey';
+    $apiKey = '';
     $url = "https://api.opencagedata.com/geocode/v1/json?q=$lat+$lng&key=$apiKey";
     $response = get($url);
     if ($response === false) {
@@ -26,16 +26,6 @@ if (isset($_GET['lat']) && isset($_GET['lng'])) {
     exit;
 }
 
-// Direct earthquake GeoJSON request for the overlay layer
-if (isset($_GET['earthquakes'])) {
-    $eqRaw = get("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_week.geojson");
-    if ($eqRaw) {
-        echo json_encode(['earthquakes_geojson' => json_decode($eqRaw, true)]);
-    } else {
-        echo json_encode(['error' => 'Failed to fetch earthquake data']);
-    }
-    exit;
-}
 
 // 🌍 Country profile based on ISO2 or ISO3 code
 if (isset($_GET['code'])) {
@@ -62,7 +52,7 @@ if (isset($_GET['code'])) {
 
         // 2. Weather (OpenWeather 3-Day Forecast - noon only, with icons)
         $weather = [];
-        $weatherKey = 'apiKey';
+        $weatherKey = '';
         if ($capital !== 'N/A') {
             $weatherUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" . urlencode($capital) . "&appid=$weatherKey&units=metric";
             $weatherData = get($weatherUrl);
@@ -85,14 +75,15 @@ if (isset($_GET['code'])) {
         }
 
         // 3. Exchange Rate (Open Exchange)
-        $exchangeRate = 'N/A';
-        if ($currencyCode !== 'N/A') {
-            $exchangeData = get("https://open.er-api.com/v6/latest/USD");
-            if ($exchangeData !== false) {
-                $exchange = json_decode($exchangeData, true);
-                $exchangeRate = isset($exchange['rates'][$currencyCode]) ? $exchange['rates'][$currencyCode] : 'N/A';
-            }
-        }
+  $exchangeRate = 'N/A';
+if ($currencyCode !== 'N/A') {
+    $apiKey = "";
+    $exchangeData = get("https://v6.exchangerate-api.com/v6/$apiKey/latest/USD");
+    if ($exchangeData !== false) {
+        $exchange = json_decode($exchangeData, true);
+        $exchangeRate = isset($exchange['conversion_rates'][$currencyCode]) ? $exchange['conversion_rates'][$currencyCode] : 'N/A';
+    }
+}
 
         // 4. Wikipedia (search and summary)
         $wiki = ['results' => [], 'summary' => '', 'link' => '#'];
@@ -122,7 +113,7 @@ if (isset($_GET['code'])) {
 
         // 5. GeoNames (basic country data)
         $geo = [];
-        $geoUser = 'username';
+        $geoUser = '';
         $geoUrl = "http://api.geonames.org/countryInfoJSON?country=$code&username=$geoUser";
         $geoData = get($geoUrl);
         if ($geoData !== false) {
@@ -154,7 +145,7 @@ if (isset($_GET['code'])) {
 
         // 7. News (gnews.io) - include article images
         $newsList = [];
-        $apiKey = 'apiKey';
+        $apiKey = '';
         $from = date('Y-m-d', strtotime('-2 days'));
         $newsUrl = "https://gnews.io/api/v4/search?token=$apiKey&q=" . urlencode($name) . "&lang=en&max=5&from=$from";
         $newsData = get($newsUrl);

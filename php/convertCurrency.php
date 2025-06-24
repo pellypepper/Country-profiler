@@ -1,20 +1,28 @@
 <?php
 header('Content-Type: application/json');
-if (!isset($_GET['from']) || !isset($_GET['to']) || !isset($_GET['amount'])) {
-    echo json_encode(['error' => 'missing parameters']); exit;
+
+$amount = isset($_GET['amount']) ? floatval($_GET['amount']) : 0;
+$from = isset($_GET['from']) ? strtoupper(trim($_GET['from'])) : '';
+$to = isset($_GET['to']) ? strtoupper(trim($_GET['to'])) : '';
+
+if ($amount <= 0 || !$from || !$to) {
+    echo json_encode(['error' => 'Invalid parameters']);
+    exit;
 }
-$from = strtoupper($_GET['from']);
-$to = strtoupper($_GET['to']);
-$amount = floatval($_GET['amount']);
-$url = "https://api.frankfurter.app/latest?amount=$amount&from=$from&to=$to";
+
+$access_key = ''; 
+$url = "https://api.exchangerate.host/convert?from=$from&to=$to&amount=$amount&access_key=$access_key";
 $response = @file_get_contents($url);
 if ($response === false) {
-    echo json_encode(['error' => 'Conversion failed']); exit;
+    echo json_encode(['error' => 'Failed to fetch exchange rate']);
+    exit;
 }
 $data = json_decode($response, true);
-if (isset($data['rates'][$to])) {
-    echo json_encode(['converted' => round($data['rates'][$to], 2)]);
+
+if (isset($data['result'])) {
+    echo json_encode(['converted' => $data['result']]);
 } else {
-    echo json_encode(['error' => 'Conversion failed']);
+    $errorMsg = isset($data['error']['info']) ? $data['error']['info'] : 'Conversion failed';
+    echo json_encode(['error' => $errorMsg]);
 }
 ?>

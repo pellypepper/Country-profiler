@@ -6,7 +6,7 @@ A web-based interactive application that displays detailed country profiles, inc
 
 ## 🌍 Live Preview
 
-> **Note:** Live Demo link github link: https://ppeliance.infy.uk/
+> **Note:** Live Demo link github link: https://gaz.infy.uk/
 
 ---
 

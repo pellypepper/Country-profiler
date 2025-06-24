@@ -12,7 +12,7 @@ $country = urlencode($_GET['country']);
 
 $url = "http://api.geonames.org/searchJSON?formatted=true&q=$q&country=$country&maxRows=80&lang=en&username=flightltd&style=full";
 
-
+// Proxy the GeoNames API request
 $response = @file_get_contents($url);
 
 if ($response === false) {
