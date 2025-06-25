@@ -1,4 +1,4 @@
-# 📌 Country Profiler
+# 📌 Gazeetter
 
 A web-based interactive application that displays detailed country profiles, including borders, capital, currency, population, live weather, Wikipedia summary, and recent earthquake data. Built using Leaflet.js and powered by multiple public APIs.
 
