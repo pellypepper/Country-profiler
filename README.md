@@ -3,7 +3,7 @@
 A web-based interactive application that displays detailed country profiles, including borders, capital, currency, population, live weather, Wikipedia summary, and recent earthquake data. Built using Leaflet.js and powered by multiple public APIs.
 
 ---<img width="1920" height="969" alt="screencapture-gaz-infy-uk-2025-07-10-15_14_24" src="https://github.com/user-attachments/assets/898b287a-20d1-43e1-82a3-1637fbdd7e1e" />
-<img width="1920" height="945" alt="screencapture-pelumi-fwh-is-2025-07-10-15_13_33" src="https://github.com/user-attachments/assets/da653582-5122-44e9-a108-c1c29e695b19" />
+
 
 
 ## 🌍 Live Preview
